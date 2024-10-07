@@ -26,6 +26,7 @@ def score_lose(df):
     return mean_score_rate, mean_lose_rate, score_rate, lose_rate, winner
 
 
+#### 2. 득점율, 실점율 정리 함수
 def checking_number2(df, user):
     user_dict = {11:0, 12:1, 21:2, 22:3}
     mean_score_rate, mean_lose_rate, score_rate, lose_rate, winner = [], [], [[], [], [], []], [[], [], [], []], []

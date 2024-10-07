@@ -21,12 +21,10 @@ async def shutdown():
     await engine.dispose()
 
 import pandas as pd
+### 이건 맨 처음에 FastAPI 연습해본다고 넣어둔거에요. 지워도 됨
 async def get():
     query = "SELECT * FROM racket"
     data = await database.fetch_all(query)
-    dict_rows = [dict(row) for row in data]
-    df = pd.DataFrame(dict_rows)
-    print(df)
     return data
  
 
@@ -39,6 +37,6 @@ async def read_racket():
 async def show_personal_analysis(user_id:int):
     return await personal_analysis(user_id)
     
-@app.get("/{user}/{match_id}/")
-async def read_set(user:int, match_id:int):
-    return await user_match_analysis(user, match_id)
+@app.get("/{user_id}/{match_id}/")
+async def read_set(user_id:int, match_id:int):
+    return await user_match_analysis(user_id, match_id)
