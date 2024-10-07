@@ -1,6 +1,4 @@
-from typing import Union
 from database import database
-from fastapi import FastAPI
 from analysis.flow import flow
 from analysis.make_dataframe import change_df
 from analysis.score_lose_rate import checking_number2
@@ -8,8 +6,6 @@ from analysis.skill import checking_number3
 from analysis.strategy import checking_number4
 from analysis.mental import mental_1, mental_2
 
-# # FastAPI 앱 생성
-# app = FastAPI()
 
 import pandas as pd
 import numpy as np
@@ -88,12 +84,12 @@ async def user_match_analysis(user_id, match_id):
 
     ## 3. 기술력
     print("3. 기술력")
-    skill = checking_number3(df, user, match_df)
+    skill = checking_number3(match_df, df, user)
     
     ## 4. 전략
     print("4. 전략")
     ##################################시간되면 기여도 여기에 추가하기
-    strategy = checking_number4(df, user, match_df)
+    strategy = checking_number4(match_df, df, user)
 
     ## 5. 집중력
     print("5. 집중력")

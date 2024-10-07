@@ -3,9 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 from databases import Database
+from config import DATABASE_URL
 
 # 데이터베이스 URL 설정
-DATABASE_URL = "postgresql+asyncpg://postgres:ssafy@j11a509.p.ssafy.io:5432/ddada"
 
 # SQLAlchemy 데이터베이스 엔진 생성
 engine = create_async_engine(DATABASE_URL, pool_size=10, max_overflow=20)

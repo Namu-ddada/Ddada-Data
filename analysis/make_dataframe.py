@@ -19,7 +19,7 @@ def flow_function(df, i):
                     df[f'{ls}_flow'][i] = df[f'{ls}_flow'][i-1] -1
                 else:
                     df[f'{ls}_flow'][i] = -1
-            # flag = False
+            flag = False
         else:
             if i == 0:
                 df[f'{missed_player1}_flow'][i] = -1
