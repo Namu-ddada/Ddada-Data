@@ -101,16 +101,17 @@ async def recommend_racket(balance, weight, price, shaft, racket_id):
             max_cnt = 0
             max_i = 0
             for i in range(my_racket_cnt):
-                if df[i]['manufacturer'] == data[0]['manufacturer']:
-                    df[i]['cnt'] += 1
-                if price*10000 <= df[i]['price'] <= (price+10)*10000:
-                    df[i]['cnt'] += 1
-                if df[i]['material'] == data[0]['material']:
-                    df[i]['cnt'] += 1
-                if df[i]['cnt'] > max_cnt:
-                    max_cnt = df[i]['cnt']
+                print(df)
+                if df.iloc[i,:]['manufacturer'] == data[0]['manufacturer']:
+                    df.iloc[i,:]['cnt'] += 1
+                if price*10000 <= df.iloc[i,:]['price'] <= (price+10)*10000:
+                    df.iloc[i,:]['cnt'] += 1
+                if df.iloc[i,:]['material'] == data[0]['material']:
+                    df.iloc[i,:]['cnt'] += 1
+                if df.iloc[i,:]['cnt'] > max_cnt:
+                    max_cnt = df.iloc[i,:]['cnt']
                     max_i = i
-            data[0]['type'] = f'내가 보유한 라켓 "{df[max_i]["name"]}"과 가장 유사해요.💫'
+            data[0]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i, :]["name"]}"과 가장 유사해요.💫'
             
         racket = {
             'my_type':my_type,
@@ -124,22 +125,22 @@ async def recommend_racket(balance, weight, price, shaft, racket_id):
             max_cnt0, max_cnt1 = 0, 0
             max_i0, max_i1 = 0, 0
             for i in range(my_racket_cnt):
-                if df[i]['manufacturer'] == data[0]['manufacturer']:
-                    df[i]['cnt0'] += 1
-                if df[i]['manufacturer'] == data[1]['manufacturer']:
-                    df[i]['cnt1'] += 1
-                if df[i]['material'] == data[0]['material']:
-                    df[i]['cnt0'] += 1
-                if df[i]['material'] == data[1]['material']:
-                    df[i]['cnt1'] += 1
-                if df[i]['cnt0'] > max_cnt0:
-                    max_cnt0 = df[i]['cnt0']
+                if df.iloc[i,:]['manufacturer'] == data[0]['manufacturer']:
+                    df.iloc[i,:]['cnt0'] += 1
+                if df.iloc[i,:]['manufacturer'] == data[1]['manufacturer']:
+                    df.iloc[i,:]['cnt1'] += 1
+                if df.iloc[i,:]['material'] == data[0]['material']:
+                    df.iloc[i,:]['cnt0'] += 1
+                if df.iloc[i,:]['material'] == data[1]['material']:
+                    df.iloc[i,:]['cnt1'] += 1
+                if df.iloc[i,:]['cnt0'] > max_cnt0:
+                    max_cnt0 = df.iloc[i,:]['cnt0']
                     max_i0 = i
-                if df[i]['cnt1'] > max_cnt1:
-                    max_cnt1 = df[i]['cnt1']
+                if df.iloc[i,:]['cnt1'] > max_cnt1:
+                    max_cnt1 = df.iloc[i,:]['cnt1']
                     max_i1 = i
             if max_i0 >= max_i1:
-                data[0]['type'] = f'내가 보유한 라켓 "{df[max_i0]["name"]}"과 가장 유사해요.💫'
+                data[0]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i0, :]["name"]}"과 가장 유사해요.💫'
                 if data[0]['price'] > data[1]['price']:
                     data[1]['type'] = '검색 조건에 부합한 라켓 중 가장 저렴해요.😁'
                 elif data[1]['color'] != None:
@@ -147,28 +148,28 @@ async def recommend_racket(balance, weight, price, shaft, racket_id):
                         data[1]['type'] = '색상이 다양해서 취향에 따라 고를 수 있어요.🌈'
                     else:
                         if max_i0 != max_i1:
-                            data[1]['type'] = f'내가 보유한 라켓 "{df[max_i1]["name"]}"과 가장 유사해요.💫'
+                            data[1]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i1, :]["name"]}"과 가장 유사해요.💫'
                         else:
                             max_cnt1 = 0
                             max_i1 = 0
                             for i in range(my_racket_cnt):
-                                if (i != max_i0) and (df[i]['cnt1'] >= max_cnt1):
+                                if (i != max_i0) and (df.iloc[i,:]['cnt1'] >= max_cnt1):
                                     max_i1 = i
-                                    max_cnt1 = df[i]['cnt1']
-                            data[1]['type'] = f'내가 보유한 라켓 "{df[max_i1]["name"]}"과 가장 유사해요.💫'
+                                    max_cnt1 = df.iloc[i,:]['cnt1']
+                            data[1]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i1, :]["name"]}"과 가장 유사해요.💫'
                 else:
                     if max_i0 != max_i1:
-                        data[1]['type'] = f'내가 보유한 라켓 "{df[max_i1]["name"]}"과 가장 유사해요.💫'
+                        data[1]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i1, :]["name"]}"과 가장 유사해요.💫'
                     else:
                         max_cnt1 = 0
                         max_i1 = 0
                         for i in range(my_racket_cnt):
-                            if (i != max_i0) and (df[i]['cnt1'] >= max_cnt1):
+                            if (i != max_i0) and (df.iloc[i,:]['cnt1'] >= max_cnt1):
                                 max_i1 = i
-                                max_cnt1 = df[i]['cnt1']
-                        data[1]['type'] = f'내가 보유한 라켓 "{df[max_i1]["name"]}"과 가장 유사해요.💫'
+                                max_cnt1 = df.iloc[i,:]['cnt1']
+                        data[1]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i1, :]["name"]}"과 가장 유사해요.💫'
             else:
-                data[1]['type'] = f'내가 보유한 라켓 "{df[max_i1]["name"]}"과 가장 유사해요.💫'
+                data[1]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i1, :]["name"]}"과 가장 유사해요.💫'
                 if data[1]['price'] > data[0]['price']:
                     data[0]['type'] = '검색 조건에 부합한 라켓 중 가장 저렴해요.😁'
                 elif data[0]['color'] != None:
@@ -176,26 +177,26 @@ async def recommend_racket(balance, weight, price, shaft, racket_id):
                         data[0]['type'] = f'색상이 다양해서 취향에 따라 고를 수 있어요.🌈'
                     else:
                         if max_i0 != max_i1:
-                            data[0]['type'] = f'내가 보유한 라켓 "{df[max_i0]["name"]}"과 가장 유사해요.💫'
+                            data[0]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i0, :]["name"]}"과 가장 유사해요.💫'
                         else:
                             max_cnt0 = 0
                             max_i0 = 0
                             for i in range(my_racket_cnt):
-                                if (i != max_i1) and (df[i]['cnt0'] >= max_cnt0):
+                                if (i != max_i1) and (df.iloc[i,:]['cnt0'] >= max_cnt0):
                                     max_i0 = i
-                                    max_cnt0 = df[i]['cnt0']
-                            data[0]['type'] = f'내가 보유한 라켓 "{df[max_i0]["name"]}"과 가장 유사해요.💫'
+                                    max_cnt0 = df.iloc[i,:]['cnt0']
+                            data[0]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i0, :]["name"]}"과 가장 유사해요.💫'
                 else:
                     if max_i0 != max_i1:
-                        data[0]['type'] = f'내가 보유한 라켓 "{df[max_i0]["name"]}"과 가장 유사해요.💫'
+                        data[0]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i0, :]["name"]}"과 가장 유사해요.💫'
                     else:
                         max_cnt0 = 0
                         max_i0 = 0
                         for i in range(my_racket_cnt):
-                            if (i != max_i1) and (df[i]['cnt0'] >= max_cnt0):
+                            if (i != max_i1) and (df.iloc[i,:]['cnt0'] >= max_cnt0):
                                 max_i0 = i
-                                max_cnt0 = df[i]['cnt0']
-                        data[0]['type'] = f'내가 보유한 라켓 "{df[max_i0]["name"]}"과 가장 유사해요.💫'
+                                max_cnt0 = df.iloc[i,:]['cnt0']
+                        data[0]['type'] = f'내가 보유한 라켓 "{df.iloc[max_i0, :]["name"]}"과 가장 유사해요.💫'
         elif my_racket_cnt == 1:
             max_cnt0, max_cnt1 = 0, 0
             max_i0, max_i1 = 0, 0
