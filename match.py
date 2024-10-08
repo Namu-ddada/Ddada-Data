@@ -4,7 +4,7 @@ from analysis.make_dataframe import change_df
 from analysis.score_lose_rate import checking_number2
 from analysis.skill import checking_number3
 from analysis.strategy import checking_number4
-from analysis.mental import mental_1, mental_2
+from analysis.mental import mental_1, mental_2, mental_3
 
 
 import pandas as pd
@@ -93,9 +93,12 @@ async def user_match_analysis(user_id, match_id):
 
     ## 5. 집중력
     print("5. 집중력")
+    m1, m2, m3_score, m3_lose = [[], [], [], []], [[], [], [], []], [[], [], [], []], [[], [], [], []]
     for set in df.set_id.unique():
+        print(set)
         print(mental_1(df.query(f"set_id == {set}").reset_index(drop=True)))
         print(mental_2(df.query(f"set_id == {set}").reset_index(drop=True)))
+        print(mental_3(df.query(f"set_id == {set}").reset_index(drop=True)))
     
     result = {
         "set_info":set_info,

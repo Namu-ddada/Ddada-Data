@@ -39,13 +39,13 @@ def people_skill(match_df):
                         
     people_skill = pd.DataFrame({'smash':smash,'serve':serve,'net':net,'push':pushs,'drop':drops, 'clear':clears})
     people_skill['cnt'] = people_skill['smash'] + people_skill['serve'] + people_skill['net'] + people_skill['push'] + people_skill['drop'] + people_skill['clear']
+    people_skill = people_skill.apply(lambda row: round(row / row['cnt'], 2), axis=1)
     return people_skill
 
 def total_skill(df, people_skill, user):
     smash, serve, net, pushs, drops, clears = [], [], [], [], [], []
     df = df.loc[df['earned_player'] == user].reset_index(drop=True)
-    for i in range(len(people_skill)):
-        people_skill.iloc[i,:] = people_skill.iloc[i,:] / (people_skill['cnt'][i]/len(df))
+    people_skill = people_skill*len(df)
     min_quat = dict(people_skill.quantile(0.75) - ((people_skill.quantile(0.75)-people_skill.quantile(0.25))*(1.5)))
     quat1 = dict(people_skill.quantile(0.25))
     quat2 = dict(people_skill.quantile(0.5))
@@ -203,13 +203,13 @@ def lose_people_skill(match_df):
 
     lose_people_skill = pd.DataFrame({'smash':smash,'serve':serve,'net':net,'push':pushs,'drop':drops, 'clear':clears, 'miss':miss})
     lose_people_skill['cnt'] = lose_people_skill['smash'] + lose_people_skill['serve'] + lose_people_skill['net'] + lose_people_skill['push'] + lose_people_skill['drop'] + lose_people_skill['clear'] + lose_people_skill['miss']
+    lose_people_skill = lose_people_skill.apply(lambda row: round(row / row['cnt'], 2), axis=1)
     return lose_people_skill
 
 def total_lose_skill(df, lose_people_skill, user):
     smash, serve, net, pushs, drops, clears, miss = [], [], [], [], [], [], []
     df = df.query(f'missed_player1 == {user} or missed_player2 == {user}').reset_index(drop=True)
-    for i in range(len(lose_people_skill)):
-        lose_people_skill.iloc[i,:] = lose_people_skill.iloc[i,:] / (lose_people_skill['cnt'][i]/len(df))
+    lose_people_skill = lose_people_skill*len(df)
     min_quat = dict(lose_people_skill.quantile(0.75) - ((lose_people_skill.quantile(0.75)-lose_people_skill.quantile(0.25))*(1.5)))
     quat1 = dict(lose_people_skill.quantile(0.25))
     quat2 = dict(lose_people_skill.quantile(0.5))
@@ -334,7 +334,7 @@ def my_lose_skill(df, user, smash, serve, net, pushs, drops, clears, miss):
 
 
 #### 3. 기술력 정리 함수
-def checking_number3(df, user, match_df):
+def checking_number3(match_df, df, user):
     # 득점 기술력
     my_skill_dict = my_skill(df, user, *total_skill(df, people_skill(match_df), user))
     skills = {
