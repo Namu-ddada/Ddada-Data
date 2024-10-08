@@ -18,7 +18,7 @@ async def recommend_racket(balance, weight, price, shaft, racket_id):
         else:
             weight_list = ['4U', '5U']
         
-    if shaft == "":
+    if shaft == "None":
         if balance == "attack":
             shaft = 'flexible'
         elif balance == "defense":
