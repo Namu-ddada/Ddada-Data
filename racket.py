@@ -87,8 +87,8 @@ async def recommend_racket(balance, weight, price, shaft, racket_id):
         if not isinstance(racket_dict, dict):
             racket_dict = dict(racket_dict)
             data[i] = racket_dict
-
-    df = df.reset_index(drop=True)
+    if my_racket_cnt:
+        df = df.reset_index(drop=True)
     
     if len(data) == 1:
         my_type = racket_type(balance, weight, shaft)
