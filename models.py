@@ -77,6 +77,7 @@ class MatchAnalysis(Base):
     loser1_I_did_good = Column(Float, nullable=False)
     loser1_I_did_best = Column(Float, nullable=False)
     loser1_message = Column(Text, nullable=False)
+    loser1_number = Column(Float, nullable=False)
     
     loser2_num = Column(Integer)
     loser2_worst = Column(Text)
@@ -90,6 +91,7 @@ class MatchAnalysis(Base):
     loser2_I_did_good = Column(Float)
     loser2_I_did_best = Column(Float)
     loser2_message = Column(Text)
+    loser2_number = Column(Float, nullable=False)
     
     # 5. 멘탈
     mental1_mean = Column(Float, nullable=False)

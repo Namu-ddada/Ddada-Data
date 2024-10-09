@@ -131,6 +131,7 @@ async def upload_match_analysis(user_id, match_id, db):
         loser1_I_did_good = strategy[0]['I_did'][3],
         loser1_I_did_best = strategy[0]['I_did'][4],
         loser1_message = strategy[0]['message'],
+        loser1_number = strategy[0]['number'],
         
         loser2_num = strategy[1]['loser'],
         loser2_worst = ','.join(strategy[1]['lose_skill'][0]),
@@ -144,6 +145,7 @@ async def upload_match_analysis(user_id, match_id, db):
         loser2_I_did_good = strategy[1]['I_did'][3],
         loser2_I_did_best = strategy[1]['I_did'][4],
         loser2_message = strategy[1]['message'],
+        loser2_number = strategy[1]['number'],
         
         # 5. 멘탈
         mental1_mean = mental[0]['mean_speed'],
