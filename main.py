@@ -31,13 +31,6 @@ async def startup():
 async def shutdown():
     await engine.dispose()
     
-# 데이터베이스 세션 의존성 주입
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
 async def get_db():
     async with SessionLocal() as session:
         yield session
