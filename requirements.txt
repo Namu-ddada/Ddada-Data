@@ -8,3 +8,4 @@ python-dotenv
 databases
 asyncpg
 google-cloud-aiplatform
+psycopg2
