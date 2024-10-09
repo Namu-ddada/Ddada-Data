@@ -149,11 +149,21 @@ def my_skill(df, user, smash, serve, net, pushs, drops, clears):
         else:
             print(df['earned_type'][i], "너는 뭐니?")
             
-    
     skill_rate_value = list(map(lambda x: round(x/sum(list(skill_rate.values())), 2)*100, list(skill_rate.values())))
+    skill_rate_dict = dict(zip(skill_rate.keys(), skill_rate_value))
+    for sk in ['smash','serve','net','pushs','drops','clears']:
+        flag = True
+        for k, v in skill_rate_dict.items():
+            if sk == k:
+                flag = False
+                break
+        if flag:
+            skill_rate_dict[sk] = 0
+            message[sk] = "알수없음"
+    
     result = {
             "middle_skill_rate": {'smash':round(smash[2], 2), 'serve':round(serve[2],2), 'net':round(net[2], 2), 'pushs':round(pushs[2], 2), 'drops':round(drops[2], 2), 'clears':round(clears[2], 2)},
-            "skill_rate" : dict(zip(skill_rate.keys(), skill_rate_value)),
+            "skill_rate" : skill_rate_dict,
             "skill_rate_text" : message
             }
     return result
@@ -323,11 +333,22 @@ def my_lose_skill(df, user, smash, serve, net, pushs, drops, clears, miss):
                 message['miss'] = "약간 부족"
             else:
                 message['miss'] = "매우 부족"
-            
+                
     skill_rate_value = list(map(lambda x: round(x/sum(list(skill_rate.values())), 2)*100, list(skill_rate.values())))
+    skill_rate_dict = dict(zip(skill_rate.keys(), skill_rate_value))
+    for sk in ['smash','serve','net','pushs','drops','clears']:
+        flag = True
+        for k, v in skill_rate_dict.items():
+            if sk == k:
+                flag = False
+                break
+        if flag:
+            skill_rate_dict[sk] = 0
+            message[sk] = "알수없음"
+            
     result = {
             "middle_lose_skill_rate": {'smash':round(smash[2], 2), 'serve':round(serve[2], 2), 'net':round(net[2], 2), 'pushs':round(pushs[2], 2), 'drops':round(drops[2], 2), 'clears':round(clears[2], 2)},
-            "lose_skill_rate" : dict(zip(skill_rate.keys(), skill_rate_value)),
+            "lose_skill_rate" : skill_rate_dict,
             "lose_skill_rate_text": message
             }
     return result

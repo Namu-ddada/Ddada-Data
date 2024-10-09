@@ -3,15 +3,17 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 from databases import Database
-from config import DATABASE_URL
+from config import DATABASE_URL, SYNC_DATABASE_URL
+from sqlalchemy.ext.asyncio import AsyncSession
 
 # 데이터베이스 URL 설정
 
 # SQLAlchemy 데이터베이스 엔진 생성
 engine = create_async_engine(DATABASE_URL, pool_size=10, max_overflow=20)
+sync_engine = create_engine(SYNC_DATABASE_URL, pool_size=10, max_overflow=20)
 
 # 세션을 관리하는 세션 메이커
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession)
 
 # Base 클래스 생성 (metadata를 포함)
 Base = declarative_base()

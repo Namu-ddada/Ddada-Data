@@ -10,7 +10,7 @@ def flow_function(df, i):
     if (missed_player1 != 0 and missed_player2 != 0):
         flag = True
 
-    if pd.isnull(earned_player):
+    if earned_player == 0:
         if flag:
             for ls in [missed_player1, missed_player2]:
                 if i == 0:
