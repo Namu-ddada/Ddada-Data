@@ -6,10 +6,10 @@
 **/__pycache__/
 *.py[cod]
 *$py.class
-
 # C extensions
 *.so
 
+ultra-hologram-438113-u3-6c71bed71212.json
 # Distribution / packaging
 .Python
 build/
