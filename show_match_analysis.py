@@ -21,16 +21,16 @@ def safe_convert(value):
 
 async def user_match_analysis(user_id, match_id):
     # 분석 데이터
-    query = f"SELECT * FROM match_analysis WHERE match_id = {match_id} AND player_id = {user_id};"
-    analysis_data = await database.fetch_all(query)
+    query = f"SELECT * FROM match_analysis WHERE match_id = :match_id AND player_id = :user_id;"
+    analysis_data = await database.fetch_all(query, values={"match_id": match_id, 'user_id': user_id})
     
     # 유저 데이터
     query = f"""SELECT s.*,
                     CASE 
-                        WHEN t1.player1_id = {user_id} THEN 11
-                        WHEN t1.player2_id = {user_id} THEN 12
-                        WHEN t2.player1_id = {user_id} THEN 21
-                        WHEN t2.player2_id = {user_id} THEN 22
+                        WHEN t1.player1_id = :user_id THEN 11
+                        WHEN t1.player2_id = :user_id THEN 12
+                        WHEN t2.player1_id = :user_id THEN 21
+                        WHEN t2.player2_id = :user_id THEN 22
                         ELSE 0
                     END AS match_condition
                 FROM score s
@@ -38,13 +38,13 @@ async def user_match_analysis(user_id, match_id):
                 JOIN match m ON st.match_id = m.match_id
                 JOIN team t1 ON m.team1_id = t1.team_id
                 JOIN team t2 ON m.team2_id = t2.team_id
-                WHERE m.match_id = {match_id}
+                WHERE m.match_id = :match_id
                 AND (
-                    (t1.player1_id = {user_id} OR t1.player2_id = {user_id})
-                    OR (t2.player1_id = {user_id} OR t2.player2_id = {user_id})
+                    (t1.player1_id = :user_id OR t1.player2_id = :user_id)
+                    OR (t2.player1_id = :user_id OR t2.player2_id = :user_id)
                 );
                 """
-    data = await database.fetch_all(query)
+    data = await database.fetch_all(query, values={"match_id": match_id, 'user_id': user_id})
     user = data[0]['match_condition']
     dict_rows = [dict(row) for row in data]
     df = change_df(pd.DataFrame(dict_rows))
@@ -63,13 +63,7 @@ async def user_match_analysis(user_id, match_id):
             "score2":safe_convert(list(imsi_df['score2'])),
           }
         set_info.append(set_info_dict)
-        
-        
-        
-    if len(df)//4 > len(df.loc[df[f'{user}_flow'] != 0]):
-        print("기여도가 너무 적어 분석이 정확하지 않을 수 있어요.") 
-        print(f"기여도: {len(df)} 중 {len(df.loc[df[f'{user}_flow'] != 0])}번의 기록으로 {len(df.loc[df[f'{user}_flow'] != 0]) / len(df) * 100}%에 불과해요.")
-        
+            
     result = {}
 
     ## 1. 흐름에 따른 성향 태그

@@ -56,10 +56,10 @@ async def upload_match_analysis(match_id, db):
             # 유저 데이터
             query = f"""SELECT s.*,
                             CASE 
-                                WHEN t1.player1_id = {user_id} THEN 11
-                                WHEN t1.player2_id = {user_id} THEN 12
-                                WHEN t2.player1_id = {user_id} THEN 21
-                                WHEN t2.player2_id = {user_id} THEN 22
+                                WHEN t1.player1_id = :user_id THEN 11
+                                WHEN t1.player2_id = :user_id THEN 12
+                                WHEN t2.player1_id = :user_id THEN 21
+                                WHEN t2.player2_id = :user_id THEN 22
                                 ELSE 0
                             END AS match_condition
                         FROM score s
@@ -67,13 +67,13 @@ async def upload_match_analysis(match_id, db):
                         JOIN match m ON st.match_id = m.match_id
                         JOIN team t1 ON m.team1_id = t1.team_id
                         JOIN team t2 ON m.team2_id = t2.team_id
-                        WHERE m.match_id = {match_id}
+                        WHERE m.match_id = :match_id
                         AND (
-                            (t1.player1_id = {user_id} OR t1.player2_id = {user_id})
-                            OR (t2.player1_id = {user_id} OR t2.player2_id = {user_id})
+                            (t1.player1_id = :user_id OR t1.player2_id = :user_id)
+                            OR (t2.player1_id = :user_id OR t2.player2_id = :user_id)
                         );
                         """
-            data = await database.fetch_all(query)
+            data = await database.fetch_all(query, values={"match_id": match_id, 'user_id': user_id})
             user = data[0]['match_condition']
             dict_rows = [dict(row) for row in data]
             df = change_df(pd.DataFrame(dict_rows))

@@ -16,8 +16,8 @@ async def personal_analysis(user_id):
                 lose_my_smash_text, lose_my_serve_text, lose_my_net_text, lose_my_pushs_text, lose_my_drops_text, lose_my_clears_text,
                 loser1_number, loser2_number, mental1_mean, mental1_user, mental2_mean, mental2_user, mental3_mean_score, mental3_user_score, mental3_mean_lose, mental3_user_lose
                 FROM match_analysis 
-                WHERE player_id = {user_id};"""
-    data = await database.fetch_all(query)
+                WHERE player_id = :user_id;"""
+    data = await database.fetch_all(query, values={'user_id': user_id})
     dict_rows = [dict(row) for row in data]
     df = pd.DataFrame(dict_rows)
     
