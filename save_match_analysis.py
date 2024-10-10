@@ -50,7 +50,7 @@ async def upload_match_analysis(match_id, db):
                         AND player_id = :user_id);"""
         data = await database.fetch_all(exist_query, values={"match_id": match_id, 'user_id': user_id})
         
-        if data:
+        if data[0]['exists']:
             result.append({"status": "already exists", "data": f"{match_id} 경기의 {user_id} 선수 분석 결과가 이미 존재합니다."})
         else:
             # 유저 데이터
