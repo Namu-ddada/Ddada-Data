@@ -24,7 +24,7 @@ def generate(score, lose, skill, strategy, mental):
             {type: 공격형 플레이어, 
             type_message: 공격적으로 경기를 주도하며, 약점을 빠르게 파악해 상대를 압박하는 데에 능숙하네요! 다만, 경기 중 멘탈이 흔들리고, 실점을 허용할 때가 많습니다. 
             실점율은 줄이고, 위기 상황에서도 득점을 이어가기 위해 수비를 강화하고, 집중력을 꾸준히 유지하는 연습을 해보는건 어떨까요?} 
-            type과 type_message는 이러한 형식으로 주면 돼. type과 type_message 말고는 무조건 한글로만 작성해서 다음 정보에 대해 답을 줘.
+            type과 type_message는 이러한 형식으로 주면 돼. type과 type_message 말고는 무조건 한글로만 작성해서 다음 정보에 대해 답을 줘. 그리고 type_message는 니가 배드민턴 전문가로써 이 유저의 성향을 분석한 내용을 적절히 넣어줘. 읽기에 어색하면 안돼.
             주의할건 무조건 저 딕셔너리 형식으로만 답을 줘야한다는거야.""" + f"득점율: {score}, 1-실점율: {lose}, 기술력: {skill}, 전략적: {strategy}, 멘탈: {mental}"
 
     generation_config = {

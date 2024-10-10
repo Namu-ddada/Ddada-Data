@@ -23,7 +23,6 @@ async def user_match_analysis(user_id, match_id):
     # 분석 데이터
     query = f"SELECT * FROM match_analysis WHERE match_id = {match_id} AND player_id = {user_id};"
     analysis_data = await database.fetch_all(query)
-    print(analysis_data[0]['mean_score_rate'])
     
     # 유저 데이터
     query = f"""SELECT s.*,

@@ -35,7 +35,6 @@ async def get_db():
     async with SessionLocal() as session:
         yield session
 
-
 @app.get("/rackets/{balance}/{weight}/{price}/{shaft}/")
 async def show_racket_recommend(balance:str, weight:str, price:int, shaft:str, racket_id: List[int] = Query(None)):
     if racket_id is None:
@@ -50,7 +49,7 @@ async def show_personal_analysis(user_id:int):
 async def read_set(user_id:int, match_id:int):
     return await user_match_analysis(user_id, match_id)
 
-@app.post("/add_match_analysis/{user_id}/{match_id}/")
-async def add_match_analysis(user_id:int, match_id:int, db: AsyncSession = Depends(get_db)):
-    return await upload_match_analysis(user_id, match_id, db)
+@app.post("/add_match_analysis/{match_id}/")
+async def add_match_analysis(match_id:int, db: AsyncSession = Depends(get_db)):
+    return await upload_match_analysis(match_id, db)
     
