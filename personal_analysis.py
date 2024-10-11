@@ -88,8 +88,8 @@ async def personal_analysis(user_id):
                 mental[number-1].append(0.5)
         
     my_skill = round((np.mean(score_skill) + np.mean(lose_skill)) / 2 *100)
-    my_strategy = round(((strategy_number[0] / cnt[0]) + (strategy_number[1] / cnt[1])) / 2 * 100)
-
+    my_strategy = round(((np.mean(strategy_number[0]) / cnt[0]) + (np.mean(strategy_number[1]) / cnt[1])) / 2 * 100)
+    
     my_mental = 0
     for m in mental:
         if len(m) == 0:
