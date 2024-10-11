@@ -90,7 +90,20 @@ async def upload_match_analysis(match_id, db):
             print("4. 전략")
             ##################################시간되면 기여도 여기에 추가하기
             strategy = checking_number4(match_df, df, user)
-
+            
+            if strategy[1]['loser'] == 0:
+                loser2_I_did_worst_0 = 0
+                loser2_I_did_bad_0 = 0
+                loser2_I_did_soso_0 = 0
+                loser2_I_did_good_0 = 0
+                loser2_I_did_best_0 = 0
+            else:
+                loser2_I_did_worst_0 = strategy[1]['I_did'][0]
+                loser2_I_did_bad_0 = strategy[1]['I_did'][1]
+                loser2_I_did_soso_0 = strategy[1]['I_did'][2]
+                loser2_I_did_good_0 = strategy[1]['I_did'][3]
+                loser2_I_did_best_0 = strategy[1]['I_did'][4]
+                
             ## 5. 집중력
             print("5. 집중력")
             mental = checking_number5(match_df, df, user)
@@ -165,11 +178,11 @@ async def upload_match_analysis(match_id, db):
                 loser2_soso = ','.join(strategy[1]['lose_skill'][2]),
                 loser2_good = ','.join(strategy[1]['lose_skill'][3]),
                 loser2_best = ','.join(strategy[1]['lose_skill'][4]),
-                loser2_I_did_worst = strategy[1]['I_did'][0],
-                loser2_I_did_bad = strategy[1]['I_did'][1],
-                loser2_I_did_soso = strategy[1]['I_did'][2],
-                loser2_I_did_good = strategy[1]['I_did'][3],
-                loser2_I_did_best = strategy[1]['I_did'][4],
+                loser2_I_did_worst = loser2_I_did_worst_0,
+                loser2_I_did_bad = loser2_I_did_bad_0,
+                loser2_I_did_soso = loser2_I_did_soso_0,
+                loser2_I_did_good = loser2_I_did_good_0,
+                loser2_I_did_best = loser2_I_did_best_0,
                 loser2_message = strategy[1]['message'],
                 loser2_number = strategy[1]['number'],
                 
