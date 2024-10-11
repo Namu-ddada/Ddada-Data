@@ -38,7 +38,20 @@ def checking_number2(df, user):
             score_rate[i].append(s_r[i])
             lose_rate[i].append(l_r[i])
         winner.append(w)
-    msr, mlr = np.mean(mean_score_rate), np.mean(mean_lose_rate)
+    mean_score_rate.sort()
+    if len(mean_score_rate)%2 == 0:
+        idx = len(mean_score_rate) // 2
+        msr = (mean_score_rate[idx-1] + mean_score_rate[idx])/2
+    else:
+        idx = len(mean_score_rate) // 2
+        msr = mean_score_rate[idx]
+    mean_lose_rate.sort()
+    if len(mean_lose_rate)%2 == 0:
+        idx = len(mean_lose_rate) // 2
+        mlr = (mean_lose_rate[idx-1] + mean_lose_rate[idx])/2
+    else:
+        idx = len(mean_lose_rate) // 2
+        mlr = mean_lose_rate[idx]
     sr = [np.mean(score_rate[0]), np.mean(score_rate[1]), np.mean(score_rate[2]), np.mean(score_rate[3])]
     lr = [np.mean(lose_rate[0]), np.mean(lose_rate[1]), np.mean(lose_rate[2]), np.mean(lose_rate[3])]
     result = {
